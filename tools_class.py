@@ -58,8 +58,8 @@ class DataProcessor(object):
             return lines
 
 
-class BinaryClassificationProcessor(DataProcessor):
-    """Processor for binary classification dataset."""
+class TernaryClassificationProcessor(DataProcessor):
+    """Processor for ternary classification dataset."""
 
     def get_train_examples(self, data_dir):
         """See base class."""
@@ -73,15 +73,16 @@ class BinaryClassificationProcessor(DataProcessor):
 
     def get_labels(self):
         """See base class."""
-        return ["0", "1"]
+        return ["0", "1", "2"]
 
     def _create_examples(self, lines, set_type):
         """Creates examples for the training and dev sets."""
         examples = []
         for (i, line) in enumerate(lines):
             guid = "%s-%s" % (set_type, i)
-            text_a = line[3]
+            text_a = line[2]
+            text_b = line[3]
             label = line[1]
             examples.append(
-                InputExample(guid=guid, text_a=text_a, text_b=None, label=label))
+                InputExample(guid=guid, text_a=text_a, text_b=text_b, label=label))
         return examples
